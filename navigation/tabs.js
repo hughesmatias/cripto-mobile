@@ -136,7 +136,7 @@ const Tabs = () => {
                                     tintColor: focused ? COLORS.primary : COLORS.black,
                                 }}
                             />
-                            <Text style={{ color: focused ? COLORS.primary : COLORS.black}}>Prices</Text>
+                            <Text style={{ color: focused ? COLORS.primary : COLORS.black}}>PRICES</Text>
                         </View>
                     )
                 }}
@@ -159,7 +159,7 @@ const Tabs = () => {
                                     tintColor: focused ? COLORS.primary : COLORS.black,
                                 }}
                             />
-                            <Text style={{ color: focused ? COLORS.primary : COLORS.black}}>Settings</Text>
+                            <Text style={{ color: focused ? COLORS.primary : COLORS.black}}>SETTINGS</Text>
                         </View>
                     )
                 }}
