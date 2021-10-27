@@ -10,6 +10,8 @@ import {
     ImageBackground,
 } from 'react-native';
 
+import PriceAlert from '../components/PriceAlert';
+
 import { dummyData, COLORS, SIZES, FONTS, icons, images } from '../constants';
 
 const NavbarSize = 130;
@@ -140,10 +142,18 @@ const Home = ({ navigation }) => {
             </ImageBackground>
         </View>
     }
+
+    const renderAlert = () => (
+        <PriceAlert customStyleComponent={{
+            backgroundColor: 'white',
+        }} />
+    );
+
     return (
         <ScrollView>
             <View style={{ flex: 1, paddingBottom: NavbarSize }}>
                 {renderHeader()}
+                {renderAlert()}
             </View>
         </ScrollView>
     )
