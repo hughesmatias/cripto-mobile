@@ -149,11 +149,42 @@ const Home = ({ navigation }) => {
         }} />
     );
 
+    const renderNotice = () => (
+        <View style={{
+            marginTop: SIZES.padding,
+            marginHorizontal: SIZES.padding,
+            marginVertical: SIZES.padding,
+            padding: 20,
+            borderRadius: SIZES.radius,
+            backgroundColor: COLORS.secondary,
+            ...styles.shadow,
+        }}>
+            <Text style={{
+                color: COLORS.white,
+                ...FONTS.h3,
+            }}>Investing</Text>
+            <Text style={{
+                marginTop: SIZES.base,
+                color: COLORS.white,
+            }}>It's very difficult... It's very difficult... It's very difficult...</Text>
+            <TouchableOpacity style={{
+                marginTop: SIZES.base,
+            }} onPress={() => console.log('On press read more')}>
+                <Text style={{
+                    textDecorationLine: 'underline',
+                    color: COLORS.green,
+                    ...FONTS.h3,
+                }}>Read more</Text>
+            </TouchableOpacity>
+        </View>
+    )
+
     return (
         <ScrollView>
             <View style={{ flex: 1, paddingBottom: NavbarSize }}>
                 {renderHeader()}
                 {renderAlert()}
+                {renderNotice()}
             </View>
         </ScrollView>
     )
