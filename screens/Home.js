@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     StyleSheet,
     View,
@@ -8,9 +8,11 @@ import {
     ScrollView,
     Image,
     ImageBackground,
+    LogBox,
 } from 'react-native';
 
 import PriceAlert from '../components/PriceAlert';
+import TransactionHistory from '../components/TransactionHistory';
 
 import { dummyData, COLORS, SIZES, FONTS, icons, images } from '../constants';
 
@@ -18,7 +20,12 @@ const NavbarSize = 130;
 
 const Home = ({ navigation }) => {
 
+    useEffect(() => {
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    }, []);
+
     const [trending, setTrending] = useState(dummyData.trendingCurrencies);
+    const [transactionHistory, setTransactionHistory] = useState(dummyData.transactionHistory);
 
     const renderHeader = () => {
         const renderItem = ({ item, index }) => (
@@ -145,7 +152,8 @@ const Home = ({ navigation }) => {
 
     const renderAlert = () => (
         <PriceAlert customStyleComponent={{
-            backgroundColor: 'white',
+            backgroundColor: COLORS.white,
+            ...styles.shadow,
         }} />
     );
 
@@ -177,7 +185,13 @@ const Home = ({ navigation }) => {
                 }}>Read more</Text>
             </TouchableOpacity>
         </View>
-    )
+    );
+
+    const renderTransactionHistory = () => (
+        <TransactionHistory customStyleComponent={{
+            ...styles.shadow,
+        }} history={transactionHistory} />
+    );
 
     return (
         <ScrollView>
@@ -185,6 +199,7 @@ const Home = ({ navigation }) => {
                 {renderHeader()}
                 {renderAlert()}
                 {renderNotice()}
+                {renderTransactionHistory()}
             </View>
         </ScrollView>
     )
