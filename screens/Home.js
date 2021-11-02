@@ -30,14 +30,18 @@ const Home = ({ navigation }) => {
     const renderHeader = () => {
         const renderItem = ({ item, index }) => (
             <TouchableOpacity style={{
-                width: 180,
-                paddingVertical: SIZES.padding,
-                paddingHorizontal: SIZES.padding,
-                marginLeft: index == 0 ? SIZES.padding : 0,
-                marginRight: SIZES.radius,
-                borderRadius: 10,
-                backgroundColor: COLORS.white,
-            }}>
+                    width: 180,
+                    paddingVertical: SIZES.padding,
+                    paddingHorizontal: SIZES.padding,
+                    marginLeft: index == 0 ? SIZES.padding : 0,
+                    marginRight: SIZES.radius,
+                    borderRadius: 10,
+                    backgroundColor: COLORS.white,
+                }}
+                onPress={() => navigation.navigate('CryptoDetail', {
+                    currency: item,
+                })}
+            >
                 <View style={{
                     flexDirection: 'row',
                 }}>
