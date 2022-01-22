@@ -19,6 +19,9 @@ import HeaderBar from '../components/HeaderBar';
 import CurrencyLabel from '../components/CurrencyLabel';
 
 const CryptoDetail = ({ navigation, route }) => {
+    const scrollX = new Animated.Value(0);
+    const numberOfCharts = [1, 2, 3];
+
     const [selectedCurrency, setCurrency] = useState();
     const item = route.params.currency;
 
@@ -35,82 +38,104 @@ const CryptoDetail = ({ navigation, route }) => {
             backgroundColor: COLORS.white,
             ...styles.shadow,
         }}>
-            <View style={{
-                flexDirection: 'row',
-                marginTop: SIZES.padding,
-                paddingHorizontal: SIZES.padding,
-            }}>
-                <View style={{
-                    flex: 1,
-                }}><CurrencyLabel
-                    icon={selectedCurrency?.image}
-                    currency={selectedCurrency?.currency}
-                    code={selectedCurrency?.code}
-                /></View>
-                <View>
-                    <Text style={{
-                        ...FONTS.h3,
-                    }}>${selectedCurrency?.amount}</Text>
-                    <Text style={{
-                        color: selectedCurrency?.type == 'I' ? COLORS.green : COLORS.red,
-                        ...FONTS.body3, 
-                    }}>{selectedCurrency?.changes}</Text>
-                </View>
+            <Animated.ScrollView
+                horizontal
+                pagingEnabled
+                scrollEventThrottle={16}
+                snapToAlignment="center"
+                snapToInterval={SIZES.width - 40}
+                showsHorizontalScrollIndicator={false}
+                decelerationRate={0}
+                onScroll={Animated.event([
+                    {nativeEvent: { contentOffset: { x: scrollX }}}], { useNativeDriver: false }
+                )}
+            >
+                {numberOfCharts.map((item, key) => (
+                    <View
+                        key={`chart-${key}`}
+                        style={{
+                            marginLeft: key === 0 ? SIZES.base : 0,
+                        }}
+                    >
+                        <View style={{
+                            flexDirection: 'row',
+                            marginTop: SIZES.padding,
+                            paddingHorizontal: SIZES.padding,
+                        }}>
+                            <View style={{
+                                flex: 1,
+                            }}><CurrencyLabel
+                                icon={selectedCurrency?.image}
+                                currency={selectedCurrency?.currency}
+                                code={selectedCurrency?.code}
+                            /></View>
+                            <View>
+                                <Text style={{
+                                    ...FONTS.h3,
+                                }}>${selectedCurrency?.amount}</Text>
+                                <Text style={{
+                                    color: selectedCurrency?.type == 'I' ? COLORS.green : COLORS.red,
+                                    ...FONTS.body3, 
+                                }}>{selectedCurrency?.changes}</Text>
+                            </View>
 
-            </View>
+                        </View>
 
-            <View style={{
-                marginTop: -25,
-            }}>
-                <VictoryChart
-                    theme={VictoryCustomTheme}
-                    height="220"
-                    width={SIZES.width - 40}
-                >
-                    <VictoryLine
-                        style={{
-                            data: {
-                                stroke: COLORS.secondary,
-                            },
-                            parent: {
-                                border: "1px solid #ccc",
-                            }
-                        }}
-                        data={selectedCurrency?.chartData}
-                        categories={{
-                            x: ['15min', '30min', '45min', '60min'],
-                            y: ['15', '30', '45'],
-                        }}
-                    />
-                    <VictoryScatter
-                        data={selectedCurrency?.chartData}
-                        size="7"
-                        style={{
-                            data: {
-                                fill: COLORS.secondary,
-                            }
-                        }}
-                    />
-                    <VictoryAxis
-                        style={{
-                            grid: {
-                                stroke: 'transparent'
-                            },
-                        }}
-                    />
-                    <VictoryAxis
-                        dependentAxis
-                        style={{
-                            axis: {
-                                stroke: 'transparent'
-                            },
-                            grid: {
-                                stroke: 'grey'
-                            },
-                        }}
-                    />
-                </VictoryChart>
-            </View>
+                        <View style={{
+                            marginTop: -25,
+                        }}>
+                            <VictoryChart
+                                theme={VictoryCustomTheme}
+                                height="220"
+                                width={SIZES.width - 40}
+                            >
+                                <VictoryLine
+                                    style={{
+                                        data: {
+                                            stroke: COLORS.secondary,
+                                        },
+                                        parent: {
+                                            border: "1px solid #ccc",
+                                        }
+                                    }}
+                                    data={selectedCurrency?.chartData}
+                                    categories={{
+                                        x: ['15min', '30min', '45min', '60min'],
+                                        y: ['15', '30', '45'],
+                                    }}
+                                />
+                                <VictoryScatter
+                                    data={selectedCurrency?.chartData}
+                                    size="7"
+                                    style={{
+                                        data: {
+                                            fill: COLORS.secondary,
+                                        }
+                                    }}
+                                />
+                                <VictoryAxis
+                                    style={{
+                                        grid: {
+                                            stroke: 'transparent'
+                                        },
+                                    }}
+                                />
+                                <VictoryAxis
+                                    dependentAxis
+                                    style={{
+                                        axis: {
+                                            stroke: 'transparent'
+                                        },
+                                        grid: {
+                                            stroke: 'grey'
+                                        },
+                                    }}
+                                />
+                            </VictoryChart>
+                        </View>
+                    </View>
+                ))}
+            </Animated.ScrollView>
         </View>
     );
 
